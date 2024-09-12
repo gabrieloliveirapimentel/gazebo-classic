@@ -520,6 +520,7 @@
           </contact>
         </surface>
       </collision>
+      <!--
       <visual name='base_link_left_leg'>
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -535,6 +536,7 @@
           </script>
         </material>
       </visual>
+      -->
     </link>
     <joint name='left_leg_joint' type='revolute'>
       <child>left_leg</child>
@@ -627,6 +629,7 @@
           </contact>
         </surface>
       </collision>
+      <!--
       <visual name='base_link_right_leg'>
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -642,6 +645,7 @@
           </script>
         </material>
       </visual>
+      -->
     </link>
     <joint name='right_leg_joint' type='revolute'>
       <child>right_leg</child>
@@ -919,9 +923,8 @@
       </physics>
     </joint>
 
-    <!-- Servomotor do rotor 1 -->
     <link name='tilt_link_1'>
-      <pose>-0.00187896 0.242705 0.0322169 0 0 0</pose> 
+      <pose>-0.00187896 0.242705 0.0322169 0 0 0</pose> <!-- Ajustado conforme a pose do rotor 1 -->
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.01</mass> <!-- Ajuste conforme necessário -->
@@ -952,7 +955,7 @@
         </surface>
       </collision>
       <visual name='tilt_link_1_visual'>
-        <pose>0 0 0 0 0 0</pose> 
+        <pose>0 0 0 0 0 0</pose> <!-- Ajuste conforme necessário -->
         <geometry>
           <cylinder>
             <length>0.242705</length>
@@ -1135,12 +1138,12 @@
       </physics>
     </joint>
 
-    <!-- Servomotor do rotor 0 -->
+
     <link name='tilt_link_0'>
-      <pose>-0.00187896 -0.242705 0.0322169 0 0 -2.09439510239</pose> 
+      <pose>-0.00187896 -0.242705 0.0322169 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>0.01</mass> 
+        <mass>0.01</mass>
         <inertia>
           <ixx>0.001</ixx>
           <ixy>0</ixy>
@@ -1168,7 +1171,7 @@
         </surface>
       </collision>
       <visual name='tilt_link_0_visual'>
-        <pose>0 0 0 0 0 0</pose> 
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
           <cylinder>
             <length>0.242705</length>
@@ -1203,6 +1206,8 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
+
+
     <link name='rotor_3'>
       <pose>-0.209396 -0.122762 0.082219 0 0 2.09439510239</pose>
       <inertial>
@@ -1276,6 +1281,7 @@
       </physics>
     </joint>
 
+    <!--
     <include>
       <uri>model://sonar</uri>
       <pose>0.08 0 -0.03 0 0 3.141592</pose>
@@ -1291,7 +1297,7 @@
         </limit>
       </axis>
     </joint>
-
+    -->
 
     <include>
       <uri>model://gps</uri>
@@ -1496,37 +1502,16 @@
           <zero_position_armed>100</zero_position_armed>
           <joint_control_type>velocity</joint_control_type>
         </channel>
-        
-        <!-- Canal de controle do servomotor do motor 0 -->
-        <channel name="motor0_tilt">
-          <input_index>13</input_index>
-          <input_offset>0</input_offset>                      <!-- Offset para definir inclinacao inicial do servomotor -->
-          <input_scaling>1.5708</input_scaling>               <!-- Limites de inclinacao do servomotor (+90 e -90 graus) -->
-          <zero_position_disarmed>0</zero_position_disarmed>  <!-- Posicao do servomotor com hexa desligado -->
-          <zero_position_armed>0</zero_position_armed>        <!-- Posicao do servomotor com hexa ligado -->
-          <joint_control_type>position</joint_control_type>   <!-- Tipo de controle do servo -->
-          <joint_name>tilt_rotor_0_joint</joint_name>         <!-- Nome do joint de tilt do rotor 0 -->
-          <joint_control_pid>                                 <!-- Controlador P puro -->
-            <p>10</p>
-            <i>0</i>
-            <d>0</d>
-            <iMax>0.0</iMax>
-            <iMin>0.0</iMin>
-            <cmdMax>2</cmdMax>
-            <cmdMin>-2</cmdMin>
-            <errMax>0.2</errMax>
-          </joint_control_pid>
-        </channel>
 
-        <!-- Canal de controle do servomotor do motor 1 -->
-        <channel name="motor1_tilt">
-          <input_index>14</input_index>
-          <input_offset>0</input_offset>                     <!-- Offset para definir inclinacao inicial do servomotor -->
-          <input_scaling>1.5708</input_scaling>              <!-- Limites de inclinacao do servomotor (+90 e -90 graus) -->
-          <zero_position_disarmed>0</zero_position_disarmed> <!-- Posicao do servomotor com hexa desligado -->
-          <zero_position_armed>0</zero_position_armed>       <!-- Posicao do servomotor com hexa ligado -->
-          <joint_control_type>position</joint_control_type>  <!-- Tipo de controle do servo -->
-          <joint_name>tilt_rotor_1_joint</joint_name>        <!-- Nome do joint do servomotor do rotor 1 -->
+        <!-- Canal de controle do tilt do motor 0 -->
+        <channel name="motor0_tilt">
+          <input_index>6</input_index>
+          <input_offset>0</input_offset>
+          <input_scaling>1.5708</input_scaling>
+          <zero_position_disarmed>0</zero_position_disarmed>
+          <zero_position_armed>0</zero_position_armed>
+          <joint_control_type>position</joint_control_type>
+          <joint_name>tilt_rotor_0_joint</joint_name> <!-- Nome do joint de tilt do rotor 0 -->
           <joint_control_pid>
             <p>10</p>
             <i>0</i>
@@ -1538,38 +1523,29 @@
             <errMax>0.2</errMax>
           </joint_control_pid>
         </channel>
-        <channel name="gimbal_roll">
-          <input_index>6</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>-3.1415</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position_gztopic</joint_control_type>
-          <gztopic>/gimbal_roll_cmd</gztopic>
-          <joint_name>typhoon_h480::cgo3_camera_joint</joint_name>
-        </channel>
-        <channel name="gimbal_pitch">
+
+        <!-- Canal de controle do tilt do motor 1 -->
+        <channel name="motor1_tilt">
           <input_index>7</input_index>
           <input_offset>0</input_offset>
-          <input_scaling>-3.1415</input_scaling>
+          <input_scaling>1.5708</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
           <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position_gztopic</joint_control_type>
-          <gztopic>/gimbal_pitch_cmd</gztopic>
-          <joint_name>typhoon_h480::cgo3_camera_joint</joint_name>
-        </channel>
-        <channel name="gimbal_yaw">
-          <input_index>8</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>-3.1415</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position_gztopic</joint_control_type>
-          <gztopic>/gimbal_yaw_cmd</gztopic>
-          <joint_name>typhoon_h480::cgo3_vertical_arm_joint</joint_name>
+          <joint_control_type>position</joint_control_type>
+          <joint_name>tilt_rotor_1_joint</joint_name> <!-- Nome do joint de tilt do rotor 1 -->
+          <joint_control_pid>
+            <p>10</p>
+            <i>0</i>
+            <d>0</d>
+            <iMax>0.0</iMax>
+            <iMin>0.0</iMin>
+            <cmdMax>2</cmdMax>
+            <cmdMin>-2</cmdMin>
+            <errMax>0.2</errMax>
+          </joint_control_pid>
         </channel>
         <channel name="left_leg">
-          <input_index>9</input_index>
+          <input_index>8</input_index>
           <input_offset>1</input_offset>
           <input_scaling>0.5</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
@@ -1587,7 +1563,7 @@
           <joint_name>left_leg_joint</joint_name>
         </channel>
         <channel name="right_leg">
-          <input_index>10</input_index>
+          <input_index>9</input_index>
           <input_offset>1</input_offset>
           <input_scaling>0.5</input_scaling>
           <zero_position_disarmed>0</zero_position_disarmed>
@@ -1619,50 +1595,6 @@
       <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
       <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
       <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
-    </plugin>
-    <plugin name='gimbal_controller' filename='libgazebo_gimbal_controller_plugin.so'>
-      <joint_yaw>typhoon_h480::cgo3_vertical_arm_joint</joint_yaw>
-      <joint_roll>typhoon_h480::cgo3_horizontal_arm_joint</joint_roll>
-      <joint_pitch>typhoon_h480::cgo3_camera_joint</joint_pitch>
-      <control_gimbal_channels>
-        <channel>
-          <joint_control_pid>
-            <p>0.4</p>
-            <i>0.05</i>
-            <d>0.02</d>
-            <iMax>0</iMax>
-            <iMin>0</iMin>
-            <cmdMax>1.0</cmdMax>
-            <cmdMin>-1.0</cmdMin>
-          </joint_control_pid>
-          <joint_axis>joint_yaw</joint_axis>
-        </channel>
-        <channel>
-          <joint_control_pid>
-            <p>0.8</p>
-            <i>0.035</i>
-            <d>0.02</d>
-            <iMax>0</iMax>
-            <iMin>0</iMin>
-            <cmdMax>0.3</cmdMax>
-            <cmdMin>-0.3</cmdMin>
-          </joint_control_pid>
-          <joint_axis>joint_roll</joint_axis>
-        </channel>
-        <channel>
-          <joint_control_pid>
-            <p>0.3</p>
-            <i>0.01245</i>
-            <d>0.015</d>
-            <iMax>0</iMax>
-            <iMin>0</iMin>
-            <cmdMax>0.3</cmdMax>
-            <cmdMin>-0.3</cmdMin>
-          </joint_control_pid>
-          <joint_axis>joint_pitch</joint_axis>
-        </channel>
-      </control_gimbal_channels>
-      <gimbal_imu>camera_imu</gimbal_imu>
     </plugin>
   </model>
 </sdf>
